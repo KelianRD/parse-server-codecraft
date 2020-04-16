@@ -26,31 +26,8 @@ var api = new ParseServer({
 	// 	classNames: ["TestObject", "Place", "Team", "Player", "ChatMessage"] // List of classes to support for query subscriptions
 	// },
 
-	//**** Email Verification ****//
-	/* Enable email verification */
-	// verifyUserEmails: true,
-	/* The public URL of your app */
-	// This will appear in the link that is used to verify email addresses and reset passwords.
-	/* Set the mount path as it is in serverURL */
-	// publicServerURL: process.env.SERVER_URL || 'http://localhost:1337/parse',
-	/* This will appear in the subject and body of the emails that are sent */
-	// appName: process.env.APP_NAME || "CodeCraft", 
 
-	// emailAdapter: {
-	// 	module: 'parse-server-simple-mailgun-adapter',
-	// 	options: {
-	// 		fromAddress: process.env.EMAIL_FROM || "test@example.com",
-	// 		domain: process.env.MAILGUN_DOMAIN || "example.com",
-	// 		apiKey: process.env.MAILGUN_API_KEY  || "apikey"
-	// 	}
-	// },
-	
-	//**** File Storage ****//
-	// filesAdapter: new S3Adapter(
-	// 	{
-	// 		directAccess: true
-	// 	}
-	// )
+
 });
 // Client-keys like the javascript key or the .NET key are not necessary with parse-server
 // If you wish you require them, you can set them as options in the initialization above:
@@ -73,7 +50,24 @@ app.get('/', function (req, res) {
 // There will be a test page available on the /test path of your server url
 // Remove this before launching your app
 app.get('/test', function (req, res) {
-	res.sendFile(path.join(__dirname, '/public/test.html'));
+	Parse.initialize("myAppId");
+	Parse.serverURL = "https://test-parse-server-example.herokuapp.com/parse";
+
+	var Team = Parse.Object.extend("Team");
+	var Player = Parse.Object.extend("Player");
+
+	var q = new Parse.Query("Player");
+
+	var expensiveTeamsQuery = new Parse.Query("Team");
+	expensiveTeamsQuery.greaterThan("squadMarketValue", 100800);
+
+	var q = new Parse.Query("Player");
+q.matchesKeyInQuery("teamCode", "code", expensiveTeamsQuery); //Queries between different tables 
+
+q.count().then(function(count){
+	console.log("Found " + count + " players in expensive teams");
+});
+	//res.sendFile(path.join(__dirname, '/public/test.html'));
 });
 
 
