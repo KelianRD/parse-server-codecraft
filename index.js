@@ -50,23 +50,24 @@ app.get('/', function (req, res) {
 // There will be a test page available on the /test path of your server url
 // Remove this before launching your app
 app.get('/test', function (req, res) {
-	Parse.initialize("myAppId");
-	Parse.serverURL = "https://test-parse-server-example.herokuapp.com/parse";
+// 	Parse.initialize("myAppId");
+// 	Parse.serverURL = "https://test-parse-server-example.herokuapp.com/parse";
 
-	var Team = Parse.Object.extend("Team");
-	var Player = Parse.Object.extend("Player");
+// 	var Team = Parse.Object.extend("Team");
+// 	var Player = Parse.Object.extend("Player");
 
-	var q = new Parse.Query("Player");
+// 	var q = new Parse.Query("Player");
 
-	var expensiveTeamsQuery = new Parse.Query("Team");
-	expensiveTeamsQuery.greaterThan("squadMarketValue", 100800);
+// 	var expensiveTeamsQuery = new Parse.Query("Team");
+// 	expensiveTeamsQuery.greaterThan("squadMarketValue", 100800);
 
-	var q = new Parse.Query("Player");
-q.matchesKeyInQuery("teamCode", "code", expensiveTeamsQuery); //Queries between different tables 
+// 	var q = new Parse.Query("Player");
+// q.matchesKeyInQuery("teamCode", "code", expensiveTeamsQuery); //Queries between different tables 
 
-q.count().then(function(count){
-	console.log("Found " + count + " players in expensive teams");
-});
+// q.count().then(function(count){
+// 	console.log("Found " + count + " players in expensive teams");
+// });
+console.log("salut");
 	res.sendFile(path.join(__dirname, '/public/test.html'));
 });
 
