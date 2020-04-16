@@ -67,7 +67,7 @@ q.matchesKeyInQuery("teamCode", "code", expensiveTeamsQuery); //Queries between 
 q.count().then(function(count){
 	console.log("Found " + count + " players in expensive teams");
 });
-	//res.sendFile(path.join(__dirname, '/public/test.html'));
+	res.sendFile(path.join(__dirname, '/public/test.html'));
 });
 
 
